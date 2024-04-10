@@ -1,1 +1,3 @@
 # R-factor
+Rainfall erosivity, often denoted as the R-factor, is one of the most critical factors influencing erosion processes. Estimating the R-factor from high-resolution satellite and reanalysis datasets requires the identification of erosive events and subsequent computation of erosivity for each time interval.
+The MATLAB code provided in this repository effectively computes rainfall erosivity values for each grid using 30-minute and 60-minute rainfall data. However, users are requested to first prepare all datasets in array format before utilizing the MATLAB function to estimate rainfall erosivity.
