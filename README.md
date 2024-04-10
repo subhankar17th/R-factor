@@ -5,7 +5,7 @@ The MATLAB code provided in this repository effectively computes rainfall erosiv
 The code uses the proposed method of Renard et al. (1997) for the identification of erosive storms and McGregor et al. (1995 & 1976) method for the rainfall erosivity estimation.
 The estimated rainfall erosivity from the three datasets using the MATLAB codes has been provided in the https://doi.org/10.5281/zenodo.8406086. 
 
-References:
+**References**:
 
 Renard, K., Foster, G., Weesies, G., McCool, D. & Yoder, D. Predicting soil erosion by water: a guide to conservation planning with the Revised Universal Soil Loss Equation (RUSLE). Agric. Handb. No. 703 404 (1997).
 
