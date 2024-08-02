@@ -1,14 +1,38 @@
 **Rainfall erosivity**, often denoted as the R-factor, is one of the most critical factors influencing erosion processes. Estimating the R-factor from high-resolution satellite and reanalysis datasets requires the identification of erosive events and subsequent computation of erosivity for each time interval.
 
-The *MATLAB* code provided in this repository effectively computes rainfall erosivity values for each grid using 30-minute and 60-minute rainfall data. However, users are requested to first prepare all datasets in array format before utilizing the *MATLAB* function to estimate rainfall erosivity. 
+The **MATLAB** code provided in this repository effectively computes rainfall erosivity values for each grid using 30-minute and 60-minute rainfall data. However, users are requested to first prepare all datasets in array format before utilizing the *MATLAB* function to estimate rainfall erosivity. 
 
 The code uses the proposed method of *Renard et al. (1997)* for the identification of erosive storms and *McGregor et al. (1995 & 1976)* method for the rainfall erosivity estimation.
-The estimated rainfall erosivity from the three datasets using the MATLAB codes has been provided in the https://doi.org/10.5281/zenodo.8406086. 
+The estimated rainfall erosivity from the three datasets using the MATLAB codes has been provided in the Zenodo (https://doi.org/10.5281/zenodo.8406086). 
 
-The **MetCalculator** is a *Python* class built to estimate metrics such as **Percentage Error**, **Unbiased Root Mean Squared Error**, **Pearson Correlation Coefficient**, and **Nash–Sutcliffe Efficiency** between observed and predicted datasets using the formula of *Moriasi et al. (2007)* and *Ma et al. (2019)*.
+Python Modules Overview
+1. **MetCalculator**
 
-The **GPRModel** is a *Python* class designed to build an optimized model for estimating a merged rainfall erosivity product. This model utilizes the *sklearn* library for Gaussian Process Regression (GPR) and the *BayesianOptimization* library for hyperparameter tuning.
+Purpose: Estimate metrics such as Percentage Error, Unbiased Root Mean Squared Error, Pearson Correlation Coefficient, and Nash–Sutcliffe Efficiency between observed and predicted datasets.
+Methods: Based on the formulae of Moriasi et al. (2007) and Ma et al. (2019).
+2. **GPR (Gaussian Process Regression)**
 
+Purpose: Build an optimized model for estimating a merged rainfall erosivity product.
+Methods: Utilizes the *sklearn* library for Gaussian Process Regression and the *BayesianOptimization* library for hyperparameter tuning.
+3. **GlobalDataExtractor**
+
+Purpose: Extract rainfall erosivity data from the existing two global datasets and the GloRESatE dataset prepared in this study for comparison of different metrics.
+4. **MetricsContinentScale**
+
+Purpose: Estimate the metrics at the continent scale between GloRESatE and observed station datasets.
+Data Source: Zenodo.
+5. **MetricsCountryScale**
+
+Purpose: Estimate the metrics at the country scale between the GloRESatE estimates and other global datasets.
+6. **MetricsEstimationClimate**
+
+Purpose: Estimate the metrics for different climatic regions between the global rainfall erosivity station dataset and satellite/reanalysis-based erosivity estimates.
+7. **MetricsGlobalData**
+
+Purpose: Estimate the metrics at the global scale between GloRESatE and GloREDa datasets.
+8. **MetricsRegionalScale**
+
+Purpose: Estimate the metrics at the regional scale between the GloRESatE dataset and regional-level datasets for four countries (India, China, United States, and Italy).
 
 **References**:
 
