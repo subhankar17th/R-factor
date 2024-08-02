@@ -25,6 +25,7 @@ Purpose: Extract rainfall erosivity data from the existing two global datasets (
 4. **MetricsContinentScale**
 
 Purpose: Estimate the metrics at the continent scale between GloRESatE and the global rainfall erosivity station dataset.
+
 Data Source: Zenodo (https://doi.org/10.5281/zenodo.8406086).
 
 5. **MetricsCountryScale**
