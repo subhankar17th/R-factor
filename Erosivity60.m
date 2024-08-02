@@ -1,4 +1,4 @@
-% The function takes the rainfall intensity (m) from the reanalysis dataset for
+% The function takes the rainfall intensity (m/hour) from the reanalysis dataset for
 % event-based rainfall erosivity estimation from a 60-minute dataset.
 
 function EI = Erosivity60(Prc)
