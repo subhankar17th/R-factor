@@ -1,0 +1,190 @@
+### Erosivity30
+
+Steps to use the `Erosivity30` functions for the estimation of rainfall erosivity from satellite datasets:
+
+1. **Download the Dataset:**
+   - Obtain the dataset from CMORPH (https://doi.org/10.25921/w9va-q159).
+   - Obtain the dataset from IMERG Final Run (https://disc.gsfc.nasa.gov/datasets).
+
+2. **Extract Rainfall Intensity Data:**
+   - Extract the rainfall intensity data for any grid location.
+   - Prepares a sequential array of rainfall intensity data over time.
+
+3. **Run the Function:**
+   - The function directly takes the rainfall intensity data for the rainfall erosivity estimation.
+   - It returns a time series of event-based rainfall erosivity.
+   - From this time series, you can prepare the annual or monthly rainfall erosivity data.
+
+### Erosivity60
+
+Steps to use the `Erosivity60.m` functions for the estimation of rainfall erosivity:
+
+1. **Obtain Rainfall Intensity Data:**
+   - Similar to Erosivity30, Erosivity60 requires rainfall intensity data for rainfall erosivity estimation.
+   - Specifically designed for use with the ERA5-Land dataset.
+
+2. **Convert Data Series:**
+   - The precipitation data in ERA5-Land is provided as Total Precipitation, so it needs to convert in the intensity.
+   - Details can be found https://confluence.ecmwf.int/pages/viewpage.action?pageId=197702790
+   - Convert this data series to rainfall intensity in m/hour units.
+
+3. **Run the Function:**
+   - Once the data is converted, Erosivity60 can work for long-term annual or monthly rainfall erosivity estimation.
+
+### MetCalculator
+The MetCalculator class provides four functions to estimate metrics such as unbiased root mean square error (ubRMSE), 
+percentage bias, Nash-Sutcliffe efficiency, and Pearson correlation coefficient. Additionally, the class includes 
+an inverse distance weighting interpolation function to estimate rainfall erosivity or rainfall values for any query points.
+
+All the functions used in the study are demonstrated in example codes and can be easily applied with the given observed and predicted values. 
+
+Follow these steps to use the functions:
+
+1. **Call the Class:**
+
+   - Import the class: from MetricsCalculator import MetCalculator
+   - Create an instance of the class: calculator = MetCalculator()
+   - Use any function from the class, e.g., calculator.inverse_distance_weighted()
+
+2. **Build an Array of Observed and Predicted Data:**
+
+   - Prepare arrays of observed and predicted data.
+   - Use the functions for metric estimation and save the results to a DataFrame.
+
+3. **inverse_distance_weighted:**
+
+   - This function takes df, tif_file, new_col_name, and nodata_value as inputs.
+   - It returns a DataFrame with a new column containing the extracted values from the TIFF file for the given query latitude and longitude points.
+
+
+### GPR
+
+The `GPRModel` class builds an optimized model for estimating a merged rainfall erosivity product using Gaussian Process Regression (GPR) 
+with Bayesian Optimization for hyperparameter tuning. The class leverages `MetCalculator` to evaluate model performance with various metrics.
+
+Follow these steps to use the functions:
+
+1. **Dependent and Independent Variables:**
+   - The class takes arrays of dependent and independent variables.
+   - Multiple dependent variables can be stacked side by side for use in the model.
+
+2. **Hyperparameters:**
+   - The model self-calibrates the hyperparameters and optimizes them in the subsequent process.
+
+3. **Print Hyperparameters and Results:**
+   - Uses `MetCalculator` to calculate various performance metrics (UBRMSE, Percentage Bias, NSE, Correlation) for both training and testing datasets.
+   - Prints the evaluation metrics.
+
+### MetricsEstimationClimate
+
+This code processes climate data, calculates percentage bias, and evaluates metrics for various datasets (IMERG, CMORPH and ERA5-Land):
+
+1. **Data Extraction and Processing:**
+   - Input CSV File: Reads the CSV file containing latitude, longitude, observed rainfall erosivity data, and additional columns for country and continent (from 'Rainfall Erosivity Data.csv' on Zenodo).
+   - Extract Data: Extracts data from climate TIFF files for specified regions.
+   - Apply Inverse Distance Weighting: Uses inverse distance weighting to process the extracted data.
+   - Calculate Percentage Biases: Computes percentage biases between observed and simulated data.
+
+2. **Metrics Calculation:**
+   - Computes metrics (e.g., Mean Percentage Bias, ubRMSE, NSE, Correlation) for each dataset and climate type.
+   - Saves results to CSV files (`metrics_climate.csv` for climate-specific metrics and `metrics_all.csv` for combined metrics).
+
+
+### GlobalDataExtractor
+
+The `GlobalDataExtractor` class demonstrates how to use the `MetricsCalculator` for extracting and comparing data from global rainfall erosivity raster TIFF files. 
+It allows for comparison between different datasets by applying inverse distance weighting to the raster data and adding it to a DataFrame for analysis.
+
+The code works in a following steps:
+
+1. **Read Input Data:**
+   - Load the input CSV file containing the latitude & longitude data with observed rainfall ersivity dataset.
+
+2. **Apply Inverse Distance Weighting:**
+   - Use the `MetricsCalculator` class to apply inverse distance weighting to the GloRESatE and GloREDa TIFF files, adding the results to the DataFrame.
+
+3. **Filter Data:**
+   - Filter the DataFrame to include only rows where `GloRESatE`, `GloREDa`, `GloREDa1.2`, and `R_Final` (from 'Rainfall Erosivity Data.csv' on Zenodo) are not NaN.
+
+4. **Save Results:**
+   - Save the filtered DataFrame to the specified output CSV file.
+
+
+### MetricsGlobalData
+
+The code compares the GloRESatE dataset with three global rainfall erosivity datasets: the global rainfall erosivity station dataset, GloREDa, and GloREDa v1.2.
+
+The code operates as follows:
+
+1. **Load Data:**
+   - Reads the filtered data from a CSV file produced by the `GlobalDataExtractor`.
+
+2. **Metrics Estimation:**
+   - Computes and compares metrics between GloRESatE and the three other datasets.
+   - Saves the results in a DataFrame.
+
+
+### MetricsContinentScale
+
+This code calculates and saves metrics by continent from the entire dataset. It uses the `MetricsCalculator` class to compute performance metrics and stores the results in a CSV file. 
+
+Here’s a brief overview:
+
+1. **Load Data:**
+   - Reads the filtered data from a CSV file saved from the filtered DataFrame from the #GlobalDataExtractor.
+   
+2. **Group Data:**
+   - Groups the data by continent.
+
+3. **Calculate Metrics:**
+   - For each continent, calculates metrics such as Mean Percent Bias, Standard Deviation of Percent Bias, NSE, Correlation Coefficient, and ubRMSE.
+   
+4. **Save Results:**
+   - Saves the calculated metrics into an output CSV file.
+
+
+
+### MetricsCountryScale
+
+This code calculates and compares metrics for specific countries based on their rainfall erosivity data.
+
+1. **Load Data:**
+   - Reads the filtered data from a CSV file, which includes observed and simulated rainfall erosivity data as extracted in #GlobalDataExtractor.
+
+2. **Calculate Metrics:**
+   - For each specified country, computes metrics (Mean Percent Bias, Std Percent Bias, NSE, Correlation Coefficient, ubRMSE) comparing observed data to simulated data.
+   - Metrics are calculated for several datasets: `global rainfall erosivity datasets`, `GloREDa`, and `GloREDa1.2`.
+
+3. **Save Results:**
+   - Saves the calculated metrics for each country in a CSV file.
+
+
+
+### MetricsRegionalScale
+
+This script calculates and compares metrics for specified countries using regional datasets.
+
+1. **Load Data:**
+   - Reads the filtered data from a CSV file.
+
+2. **Process Regional Data:**
+   - Applies inverse distance weighting to process regional datasets for India, China, and the United States using provided TIFF files.
+
+3. **Calculate Metrics:**
+   - For each specified country, computes metrics (Mean Percent Bias, Std Percent Bias, NSE, Correlation Coefficient, ubRMSE) by comparing regional data to simulated data.
+   - Applies specific multipliers for China and other countries.
+
+4. **Save Results:**
+   - Saves the calculated metrics for each country in a CSV file.
+
+
+
+
+
+Thank You
+
+
+Subhankar & team
+
+
+
