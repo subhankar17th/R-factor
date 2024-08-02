@@ -1,4 +1,4 @@
-% The funcation takes the rainfall intensity from the sattelite dataset for
+% The funcation takes the rainfall intensity (mm/hour) from the sattelite datasets for
 % event based rainfall erosviity estimation.
 
 function EI = Erosivity30(Prc)
